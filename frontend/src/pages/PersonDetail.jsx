@@ -4,8 +4,8 @@ import { getEmployee, getMovements, getWellbeing } from '../utils/api';
 import PersonMilestoneCard from '../components/PersonMilestoneCard';
 import WellbeingCard from '../components/WellbeingCard';
 import { 
-  Briefcase, Mail, MapPin, Award, Activity, Calendar, 
-  ArrowLeft, ExternalLink, ShieldAlert, Sparkles, TrendingUp
+  Briefcase, Mail, MapPin, Award, Calendar, 
+  ArrowLeft, ShieldAlert, Sparkles, TrendingUp
 } from 'lucide-react';
 
 export default function PersonDetail() {
@@ -171,27 +171,8 @@ export default function PersonDetail() {
           </div>
         </div>
 
-        {/* Right Sidebar: Jira Work Link & Wellbeing */}
+        {/* Right Sidebar: Wellbeing */}
         <div className="space-y-6">
-          {/* Jira Work Telemetry Link Glass Card */}
-          <div className="bg-white dark:bg-[#101B33] rounded-3xl p-6 border border-slate-200 dark:border-slate-700/90 shadow-sm dark:shadow-[0_8px_30px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.08)]">
-            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1 flex items-center gap-2">
-              <Activity size={16} className="text-setel-600 dark:text-cyan-400" />
-              Work Distribution Telemetry
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 font-medium">
-              Empirical Jira ticket analysis showing nominal vs actual day-to-day contributions.
-            </p>
-            
-            <Link
-              to={`/ticketing/${person.id}`}
-              className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-[#090F1D] hover:bg-setel-50 dark:hover:bg-cyan-950/40 border border-slate-200/80 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:text-setel-700 dark:hover:text-cyan-300 font-black text-xs transition-all group"
-            >
-              <span>View Full Jira Telemetry</span>
-              <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </Link>
-          </div>
-
           {/* Active Wellbeing Check-in Card (if any) */}
           {wellbeing.length > 0 && (
             <div className="space-y-4">

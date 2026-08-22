@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getEmployee, getMovements, getWellbeing } from '../utils/api';
+import { getEmployee, getMovements, getWellbeing, getWallet, reloadWallet } from '../utils/api';
 import { AppContext } from '../context/AppContext';
 import PersonMilestoneCard from '../components/PersonMilestoneCard';
 import WellbeingCard from '../components/WellbeingCard';
 import { 
   Briefcase, Mail, MapPin, Award, Calendar, 
-  ArrowLeft, ShieldAlert, Sparkles, TrendingUp, HeartPulse
+  ArrowLeft, ShieldAlert, Sparkles, TrendingUp, HeartPulse, Wallet
 } from 'lucide-react';
 
 export default function PersonDetail() {
@@ -15,6 +15,7 @@ export default function PersonDetail() {
   const [person, setPerson] = useState(null);
   const [movements, setMovements] = useState([]);
   const [wellbeing, setWellbeing] = useState([]);
+  const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -30,6 +31,13 @@ export default function PersonDetail() {
 
         const wellRes = await getWellbeing(id);
         setWellbeing(wellRes.data || []);
+
+        try {
+          const walletRes = await getWallet(id);
+          setWallet(walletRes.data);
+        } catch (e) {
+          setWallet(null);
+        }
       } catch (err) {
         setError('Failed to load person data.');
       } finally {
@@ -173,42 +181,111 @@ export default function PersonDetail() {
           </div>
         </div>
 
-        {/* Right Sidebar: Wellbeing */}
+        {/* Right Sidebar */}
         <div className="space-y-6">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-            Change Wellbeing Telemetry
-          </h2>
-          {wellbeing.length > 0 ? (
-            <div className="space-y-4">
-              {wellbeing.map(c => (
-                <WellbeingCard key={c.id} persona={persona} checkin={{
-                  id: c.id,
-                  name: person.name,
-                  changesCount: c.org_changes_count,
-                  changes: [`Triggered by: ${c.triggered_by.replace(/_/g, ' ')}`],
-                  responded: c.responded,
-                  responseDate: c.response_date,
-                  stressLevel: c.stress_level,
-                  notes: c.notes,
-                  triggerDate: c.trigger_date
-                }} />
-              ))}
-            </div>
-          ) : (
-            <div className="bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-6 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]">
-              <div className="flex flex-col items-center text-center gap-3 py-4">
-                <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-700">
-                  <HeartPulse size={24} className="text-slate-400 dark:text-slate-500" />
+          {/* Royalty Wallet Balance (Admin view) - First */}
+          {wallet && (
+            <div>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                Royalty Wallet <span className="text-purple-400">(Solana)</span>
+              </h2>
+              <div className="mt-3 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] rounded-2xl p-5 text-white relative overflow-hidden border border-purple-500/30 shadow-md dark:shadow-[0_0_20px_rgba(147,51,234,0.2)]">
+                <div className="absolute top-2 right-2 opacity-20">
+                  <Wallet size={32} />
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No Wellbeing Events</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    No organizational changes have triggered a wellbeing check-in for this employee.
-                  </p>
+                <div className="relative z-10">
+                  <p className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Balance</p>
+                  <p className="text-2xl font-black mt-0.5">{wallet.balance.toFixed(2)} <span className="text-sm text-purple-300">SOL</span></p>
+                  <div className="mt-3 pt-3 border-t border-white/10 space-y-1.5">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="text-slate-400">Monthly Reload</span>
+                      <span className="font-bold text-emerald-300">{wallet.monthly_reload} SOL</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="text-slate-400">Last Reload</span>
+                      <span className="font-bold text-slate-200">{wallet.last_reload || 'N/A'}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="text-slate-400">Wallet Address</span>
+                      <span className="font-mono text-purple-300 truncate max-w-[120px]" title={wallet.wallet_address}>
+                        {wallet.wallet_address?.slice(0, 8)}...{wallet.wallet_address?.slice(-4)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Admin Reload - Custom Amount */}
+                  <div className="mt-4 flex items-center gap-1.5">
+                    <input
+                      type="number"
+                      defaultValue={wallet.monthly_reload}
+                      min="1"
+                      step="10"
+                      id={`reload-amt-${person.id}`}
+                      className="w-20 px-2 py-1.5 bg-white/10 border border-white/20 rounded-lg text-[11px] font-bold text-white placeholder-slate-400 focus:outline-none focus:border-purple-400"
+                      placeholder="Amt"
+                    />
+                    <button
+                      onClick={async () => {
+                        const amt = parseFloat(document.getElementById(`reload-amt-${person.id}`).value);
+                        if (!amt || amt <= 0) return;
+                        try {
+                          const res = await reloadWallet({ employee_id: person.id, amount: amt });
+                          setWallet(prev => ({ ...prev, balance: res.data.new_balance, last_reload: new Date().toISOString().split('T')[0] }));
+                        } catch (err) {
+                          alert(err.response?.data?.detail || 'Reload failed');
+                        }
+                      }}
+                      className="flex-1 py-1.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-black text-[10px] rounded-lg shadow-md transition-all flex items-center justify-center gap-1"
+                    >
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                        <path d="M3 3v5h5" />
+                      </svg>
+                      Reload
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           )}
+
+          {/* Change Wellbeing Telemetry - Below wallet */}
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+              Change Wellbeing Telemetry
+            </h2>
+            {wellbeing.length > 0 ? (
+              <div className="space-y-4 mt-3">
+                {wellbeing.map(c => (
+                  <WellbeingCard key={c.id} persona={persona} checkin={{
+                    id: c.id,
+                    name: person.name,
+                    changesCount: c.org_changes_count,
+                    changes: [`Triggered by: ${c.triggered_by.replace(/_/g, ' ')}`],
+                    responded: c.responded,
+                    responseDate: c.response_date,
+                    stressLevel: c.stress_level,
+                    notes: c.notes,
+                    triggerDate: c.trigger_date
+                  }} />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-3 bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-6 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]">
+                <div className="flex flex-col items-center text-center gap-3 py-4">
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-700">
+                    <HeartPulse size={24} className="text-slate-400 dark:text-slate-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No Wellbeing Events</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                      No organizational changes have triggered a wellbeing check-in for this employee.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

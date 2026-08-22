@@ -26,4 +26,11 @@ export const getAnomalies = () => api.get('/anomalies');
 export const getScenarios = () => api.get('/scenarios');
 export const getTicketingEmployees = () => api.get('/ticketing');
 
+// Wallet APIs
+export const getWallet = (id) => api.get(`/wallet/${id}`);
+export const getWalletTransactions = (id, limit = 20) => api.get(`/wallet/${id}/transactions?limit=${limit}`);
+export const makeWalletPayment = (id, payload) => api.post(`/wallet/${id}/pay`, payload);
+export const reloadWallet = (payload) => api.post('/wallet/reload', payload);
+export const getWalletDashboard = () => api.get('/wallet/dashboard/stats');
+
 export default api;

@@ -80,6 +80,15 @@ Three restructuring scenarios (Baseline 2021, Platform Split 2023, AI & Automati
 - **Admin / HR** sees org-wide views for the review scenario.
 - **Staff** sees a self-scoped view of their own journey, role relevancy, and upskilling plan. Switch personas from the sidebar.
 
+**Solana Royalty Wallet**
+
+A simulated Solana-based employee royalty wallet system for company-funded perks (meals, parking, rewards):
+
+- **Staff view** (`/my-wallet`) — Dark-themed wallet card displaying SOL balance, Solana wallet address with copy button, QR code for tap-to-pay at cafeteria/vending/parking, payment form to spend SOL at merchants, and full transaction history (color-coded: green for reloads, red for payments, amber for rewards).
+- **Admin view** — Each employee's person detail page shows their wallet balance, address, and a custom reload input (admin can reload any amount, not just the monthly default).
+- **Wallet Analytics Dashboard** (`/wallet-dashboard`) — Company-wide treasury overview with: total company spend, total reloaded, utilization rate (% of SOL actually used), rewards distributed, monthly budget overview, spending breakdown by merchant, top spenders leaderboard, and low-balance alerts for employees needing a top-up.
+- **How it works** — Each employee is assigned a unique Solana-style wallet address on creation. The company reloads SOL monthly (configurable per employee). Staff spend at merchants (cafeteria, parking, Grab Food, vending). Rewards are issued for upskilling milestones and performance bonuses. All transactions are logged with simulated Solana transaction hashes.
+
 ---
 
 ## Architecture

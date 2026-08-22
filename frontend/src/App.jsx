@@ -19,6 +19,8 @@ import RoleRelevancyTrends from './pages/RoleRelevancyTrends';
 import StaffUpskillingMatrix from './pages/StaffUpskillingMatrix';
 import PersonalUpskillPlan from './pages/PersonalUpskillPlan';
 import PersonalRoleRelevancy from './pages/PersonalRoleRelevancy';
+import RoyaltyWallet from './pages/RoyaltyWallet';
+import WalletDashboard from './pages/WalletDashboard';
 import AdminOnlyRoute from './components/AdminOnlyRoute';
 
 function App() {
@@ -75,6 +77,8 @@ function App() {
             <Route path="/upskilling" element={<StaffUpskillingMatrix />} />
             <Route path="/my-upskill" element={<PersonalUpskillPlan />} />
             <Route path="/my-relevancy" element={<PersonalRoleRelevancy />} />
+            <Route path="/my-wallet" element={<RoyaltyWallet />} />
+            <Route path="/wallet-dashboard" element={<WalletDashboard />} />
             <Route path="/wellbeing" element={<WellbeingDashboard />} />
             <Route path="/ticketing" element={<TicketingAnalysis />} />
             <Route path="/ticketing/:id" element={<TicketingDetail />} />

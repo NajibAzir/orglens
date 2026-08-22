@@ -156,6 +156,29 @@ CREATE TABLE IF NOT EXISTS upskilling_progress (
     notes           TEXT,
     UNIQUE(employee_id, course_name)
 );
+
+-- Employee Royalty Wallet (Solana-style simulated wallet)
+CREATE TABLE IF NOT EXISTS wallets (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id     INTEGER UNIQUE REFERENCES employees(id),
+    wallet_address  TEXT NOT NULL,
+    balance         REAL DEFAULT 0.0,
+    monthly_reload  REAL DEFAULT 150.0,
+    last_reload     DATE,
+    created_at      DATE NOT NULL
+);
+
+-- Wallet Transactions (history of reloads, payments, rewards)
+CREATE TABLE IF NOT EXISTS wallet_transactions (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id     INTEGER REFERENCES employees(id),
+    type            TEXT NOT NULL, -- reload, payment, reward
+    amount          REAL NOT NULL,
+    description     TEXT,
+    recipient       TEXT, -- e.g. 'Cafeteria', 'Vending Machine', 'Parking'
+    tx_hash         TEXT, -- simulated Solana tx hash
+    created_at      DATETIME NOT NULL
+);
     """)
     conn.commit()
     conn.close()

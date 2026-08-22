@@ -6,7 +6,7 @@ import subprocess
 
 from routers import (
     employees, roles, org_tree, movements, ticketing,
-    wellbeing, relevancy, upload, departments, dashboard, anomalies, role_history, scenarios
+    wellbeing, relevancy, upload, departments, dashboard, anomalies, role_history, scenarios, wallet
 )
 
 app = FastAPI(title="OrgLens API", version="1.0.0")
@@ -60,6 +60,7 @@ app.include_router(dashboard.router)
 app.include_router(anomalies.router)
 app.include_router(role_history.router)
 app.include_router(scenarios.router)
+app.include_router(wallet.router)
 
 @app.get("/")
 def root():

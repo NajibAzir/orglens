@@ -33,6 +33,12 @@ export default function Sidebar() {
       ]
     },
     {
+      label: 'WALLET & TREASURY',
+      items: [
+        { name: 'Wallet Analytics', path: '/wallet-dashboard', icon: Zap, badge: 'SOL', badgeType: 'live' },
+      ]
+    },
+    {
       label: 'CHANGE & CARE',
       items: [
         { name: 'Change Wellbeing', path: '/wellbeing', icon: HeartPulse },
@@ -54,6 +60,12 @@ export default function Sidebar() {
         { name: 'My Career Journey', path: `/people/${staffEmployeeId}`, icon: Users },
         { name: 'My Upskill Plan', path: '/my-upskill', icon: BookOpen, badge: 'Plan', badgeType: 'live' },
         { name: 'My Role Relevancy', path: '/my-relevancy', icon: TrendingUp, badge: 'AI', badgeType: 'ai' },
+      ]
+    },
+    {
+      label: 'WALLET & REWARDS',
+      items: [
+        { name: 'My Royalty Wallet', path: '/my-wallet', icon: Zap, badge: 'SOL', badgeType: 'live' },
       ]
     },
     {

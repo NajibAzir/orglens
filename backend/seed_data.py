@@ -676,6 +676,98 @@ for p in upskilling_progress_data:
         VALUES (?, ?, ?, ?, ?, ?)
     """, p)
 
+print("10. Seeding Employee Royalty Wallets (Solana-style)...")
+import hashlib
+import string
+
+def generate_solana_address(emp_id, name):
+    """Generate a realistic-looking Solana wallet address (base58 format)."""
+    seed_str = f"orglens-wallet-{emp_id}-{name}"
+    h = hashlib.sha256(seed_str.encode()).hexdigest()
+    # Convert to base58-like characters (Solana addresses are 32-44 chars)
+    base58_chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+    address = ''
+    for i in range(0, 44):
+        idx = int(h[i % len(h)], 16) + i
+        address += base58_chars[idx % len(base58_chars)]
+    return address
+
+def generate_tx_hash():
+    """Generate a realistic Solana transaction hash."""
+    import uuid
+    h = hashlib.sha256(uuid.uuid4().bytes).hexdigest()
+    base58_chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+    tx = ''
+    for i in range(64):
+        idx = int(h[i % len(h)], 16) + i
+        tx += base58_chars[idx % len(base58_chars)]
+    return tx
+
+# Get all active employees
+active_emps = cursor.execute("SELECT id, name FROM employees WHERE status = 'active'").fetchall()
+
+for emp_id, name in active_emps:
+    wallet_address = generate_solana_address(emp_id, name)
+    # Varied balances: some spent more, some saved
+    base_balance = random.uniform(45.0, 320.0)
+    balance = round(base_balance, 2)
+    monthly_reload = 150.0
+    
+    cursor.execute("""
+        INSERT INTO wallets (employee_id, wallet_address, balance, monthly_reload, last_reload, created_at)
+        VALUES (?, ?, ?, ?, '2024-08-01', '2024-01-01')
+    """, (emp_id, wallet_address, balance, monthly_reload))
+
+# Seed transaction history (mix of reloads, payments, rewards)
+tx_data = []
+payment_merchants = [
+    ("Cafeteria - Lunch Set A", "OrgLens Cafeteria"),
+    ("Cafeteria - Lunch Set B", "OrgLens Cafeteria"),
+    ("Cafeteria - Coffee & Snacks", "OrgLens Cafeteria"),
+    ("Vending Machine - Drinks", "Floor 3 Vending"),
+    ("Parking - Monthly Pass", "Building Parking"),
+    ("Grab Food - Team Lunch", "GrabFood"),
+    ("Cafeteria - Breakfast", "OrgLens Cafeteria"),
+    ("Team Dinner - Quarter Celebration", "External Restaurant"),
+]
+
+reward_reasons = [
+    "Upskilling milestone: Course completed",
+    "Performance bonus: Q3 delivery",
+    "Peer recognition: Helped onboard new hire",
+    "Hackathon participation reward",
+    "Perfect attendance bonus",
+]
+
+for emp_id, name in active_emps:
+    # Monthly reload transactions (last 3 months)
+    for month in ['2024-06-01', '2024-07-01', '2024-08-01']:
+        tx_data.append((emp_id, 'reload', 150.0, 'Monthly company reload', 'OrgLens Treasury', generate_tx_hash(), f'{month} 09:00:00'))
+    
+    # 5-10 random payment transactions
+    num_payments = random.randint(5, 10)
+    for _ in range(num_payments):
+        desc, recipient = random.choice(payment_merchants)
+        amount = round(random.uniform(5.0, 35.0), 2)
+        day = random.randint(1, 28)
+        month = random.randint(6, 8)
+        tx_data.append((emp_id, 'payment', -amount, desc, recipient, generate_tx_hash(), f'2024-{month:02d}-{day:02d} {random.randint(8,18):02d}:{random.randint(0,59):02d}:00'))
+    
+    # 0-2 reward transactions
+    num_rewards = random.randint(0, 2)
+    for _ in range(num_rewards):
+        reason = random.choice(reward_reasons)
+        amount = round(random.uniform(10.0, 50.0), 2)
+        day = random.randint(1, 28)
+        month = random.randint(6, 8)
+        tx_data.append((emp_id, 'reward', amount, reason, 'OrgLens Rewards', generate_tx_hash(), f'2024-{month:02d}-{day:02d} 10:00:00'))
+
+for tx in tx_data:
+    cursor.execute("""
+        INSERT INTO wallet_transactions (employee_id, type, amount, description, recipient, tx_hash, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, tx)
+
 conn.commit()
 conn.close()
 print("[SUCCESS] OrgLens Setel Database Seeded Successfully with 28 Rich Personas & Scenarios!")

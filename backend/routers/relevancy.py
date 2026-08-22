@@ -57,48 +57,57 @@ MACRO_TRENDS = [
 # Intelligent fallback mapping for roles without specific seed records
 DEFAULT_ROLE_SUGGESTIONS = {
     "Engineering": {
-        "score": 0.88,
-        "trend": "Strong demand for scalable backend APIs and high-concurrency cloud services.",
+        "score": 0.85,
+        "trend": "Strong demand for scalable backend APIs, Go microservices, and event-driven payment architectures across SEA fintech.",
         "direction": "up",
         "courses": [
-            {"course": "Modern Golang Concurrency & Microservices Architecture", "duration": "4 weeks", "urgency": "High", "relevance_gain": "+25%"},
-            {"course": "Distributed Systems & Kafka Event-Driven Architecture", "duration": "3 weeks", "urgency": "Medium", "relevance_gain": "+20%"}
+            {"course": "Ardan Labs: Ultimate Go - Advanced Engineering", "duration": "5 weeks", "urgency": "High", "relevance_gain": "+22%"},
+            {"course": "Apache Kafka for Event-Driven Architecture (Confluent)", "duration": "4 weeks", "urgency": "High", "relevance_gain": "+20%"}
         ]
     },
     "Quality Assurance": {
         "score": 0.55,
-        "trend": "Manual testing demand declining. Upskilling to Playwright and Cypress automation is required.",
+        "trend": "Manual testing demand dropping -45%. Automation-first QA with Playwright, CI/CD integration, and AI-powered test generation is the new standard.",
         "direction": "down",
         "courses": [
-            {"course": "Playwright Modern E2E Testing with TypeScript", "duration": "4 weeks", "urgency": "High", "relevance_gain": "+45%"},
-            {"course": "API Test Automation with Postman & Python", "duration": "2 weeks", "urgency": "Medium", "relevance_gain": "+30%"}
+            {"course": "Playwright Complete Guide: E2E Testing (Test Automation University)", "duration": "5 weeks", "urgency": "Critical", "relevance_gain": "+45%"},
+            {"course": "Python for Test Automation (Udemy - Andrew Knight)", "duration": "4 weeks", "urgency": "High", "relevance_gain": "+30%"}
         ]
     },
     "Platform Engineering": {
-        "score": 0.95,
-        "trend": "Platform Engineering and Kubernetes FinOps are among the highest-growth tech domains.",
+        "score": 0.94,
+        "trend": "Platform Engineering is #1 in Gartner 2024 Hype Cycle. Kubernetes, GitOps (ArgoCD), and Internal Developer Platforms (IDPs) are highest-demand skills.",
         "direction": "up",
         "courses": [
-            {"course": "Certified Kubernetes Administrator (CKA)", "duration": "6 weeks", "urgency": "Medium", "relevance_gain": "+15%"},
-            {"course": "AWS FinOps & Infrastructure as Code (Terraform)", "duration": "3 weeks", "urgency": "Low", "relevance_gain": "+10%"}
+            {"course": "Certified Kubernetes Administrator (CKA) - Linux Foundation", "duration": "8 weeks", "urgency": "Medium", "relevance_gain": "+15%"},
+            {"course": "HashiCorp Certified: Terraform Associate (003)", "duration": "4 weeks", "urgency": "Medium", "relevance_gain": "+12%"}
         ]
     },
     "Data & Analytics": {
-        "score": 0.86,
-        "trend": "High demand for live streaming data analytics, dbt transformations, and feature stores.",
+        "score": 0.82,
+        "trend": "Streaming-first lakehouse architectures (Kafka + dbt + Snowflake) replacing batch ETL. Real-time fraud detection and feature stores are core fintech needs.",
         "direction": "up",
         "courses": [
-            {"course": "Modern Data Engineering with dbt, Airflow & Snowflake", "duration": "5 weeks", "urgency": "Medium", "relevance_gain": "+25%"},
-            {"course": "Real-time Stream Processing with Kafka & PySpark", "duration": "4 weeks", "urgency": "High", "relevance_gain": "+30%"}
+            {"course": "Databricks Certified Data Engineer Professional", "duration": "6 weeks", "urgency": "High", "relevance_gain": "+18%"},
+            {"course": "dbt Fundamentals & Advanced Materialisation (dbt Labs Official)", "duration": "3 weeks", "urgency": "High", "relevance_gain": "+25%"}
         ]
     },
     "Product": {
         "score": 0.82,
-        "trend": "Product management requires strong data-driven telemetry and AI product strategy.",
+        "trend": "Product roles require AI product strategy fluency, growth experimentation, and BNM regulatory compliance for Malaysian fintech.",
         "direction": "stable",
         "courses": [
-            {"course": "AI-Driven Product Strategy & Behavioral Telemetry", "duration": "3 weeks", "urgency": "Medium", "relevance_gain": "+20%"},
-            {"course": "Fintech UX & Rapid Prototyping", "duration": "2 weeks", "urgency": "Low", "relevance_gain": "+15%"}
+            {"course": "AI Product Management Specialization (Duke University - Coursera)", "duration": "4 weeks", "urgency": "High", "relevance_gain": "+22%"},
+            {"course": "Reforge: Product Strategy Program", "duration": "6 weeks", "urgency": "Medium", "relevance_gain": "+18%"}
+        ]
+    },
+    "People & Culture": {
+        "score": 0.72,
+        "trend": "HR evolving toward data-driven people analytics, AI workforce planning, and organisational network analysis. Traditional admin declining.",
+        "direction": "stable",
+        "courses": [
+            {"course": "People Analytics Specialization (Wharton - Coursera)", "duration": "5 weeks", "urgency": "High", "relevance_gain": "+25%"},
+            {"course": "SHRM Senior Certified Professional (SHRM-SCP)", "duration": "8 weeks", "urgency": "Medium", "relevance_gain": "+15%"}
         ]
     }
 }

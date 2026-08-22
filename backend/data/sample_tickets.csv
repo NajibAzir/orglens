@@ -1,0 +1,4 @@
+employee_id,ticket_id,category,hours_spent,completed_date
+4,T-1001,backend,4.5,2023-10-01
+5,T-1002,infrastructure,2.0,2024-04-02
+6,T-1003,devops,5.0,2023-10-03

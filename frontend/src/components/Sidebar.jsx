@@ -87,7 +87,7 @@ export default function Sidebar() {
           </div>
           <div className="flex flex-col justify-center leading-tight">
             <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">OrgLens</h1>
-            <p className="text-[12px] text-setel-600 dark:text-cyan-400 font-bold mt-0.5 whitespace-nowrap">Organizational Intelligence</p>
+            <p className="text-[12px] text-cyan-600 dark:text-cyan-400 font-bold mt-0.5 whitespace-nowrap">Organizational Intelligence</p>
           </div>
         </div>
       </div>

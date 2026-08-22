@@ -23,22 +23,6 @@ export default function TopNavFull() {
         {/* Glossy top edge highlight */}
         <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent pointer-events-none" />
 
-        {/* ═══════ LEFT: Brand ═══════ */}
-        <Link to="/top" className="flex items-center gap-3 flex-shrink-0 z-10 mr-4">
-          <div className="w-9 h-9 bg-cyan-950/40 rounded-xl p-1.5 border border-cyan-400/40 shadow-[0_0_15px_rgba(0,191,255,0.3)] flex items-center justify-center transition-transform hover:scale-110">
-            <svg viewBox="0 0 100 100" className="w-full h-full" fill="none">
-              <path d="M45 10L15 45L45 55L75 20L45 10Z" fill="#00BFFF" />
-              <path d="M45 55L15 45L35 75L55 90L45 55Z" fill="#00BFFF" />
-              <path d="M45 55L75 20L85 45L55 90L45 55Z" fill="#253DE8" />
-            </svg>
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-sm font-black text-white tracking-tight drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
-              OrgLens
-            </span>
-          </div>
-        </Link>
-
         {/* ═══════ CENTER: Navigation Pills ═══════ */}
         <div className="hidden lg:flex items-center gap-1 bg-[#050A14]/60 p-1.5 rounded-full border border-slate-700/50 shadow-inner z-10 flex-1 justify-center max-w-2xl">
           {navItems.map((item) => (

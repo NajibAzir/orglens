@@ -30,10 +30,6 @@ These are two views of the same story. A person occupies a role at a point in ti
 ![Person detail journey](docs/screenshots/person-journey.png)
 *A person's complete trajectory — hires, promotions, transfers, and department changes.*
 
-### Anomaly Detection
-![Anomaly flags](docs/screenshots/anomalies.png)
-*Rule-based detection of stagnation, vacancies, orphan roles, and transition stress.*
-
 ### Staff Persona View
 ![Staff self-scoped view](docs/screenshots/staff-view.png)
 *Individual-scoped view showing personal role relevancy, upskilling plan, and wellbeing.*

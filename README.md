@@ -120,36 +120,61 @@ Once the backend is running, the full interactive API reference is at `http://lo
 - Python 3.10+
 - Node.js 18+
 
-### Step 1: Start the Backend
+### Quick Start (Single Terminal)
 
-Open a terminal and run:
+```bash
+# Install dependencies (first time only)
+cd frontend && npm install && cd ..
+npm install
 
+# Seed database + start both servers
+npm run setup
+```
+
+This starts the backend (port 8000) and frontend (port 5173) together. Open [http://localhost:5173](http://localhost:5173).
+
+### Available Commands
+
+| Command | What it does |
+|---------|-------------|
+| `npm run setup` | Seeds the database, then starts backend + frontend |
+| `npm run dev` | Starts backend + frontend (skip seeding) |
+| `npm run seed` | Re-seeds the database only |
+
+### Manual Start (Two Terminals)
+
+If you prefer running them separately:
+
+**Terminal 1 — Backend:**
 ```bash
 cd backend
 pip install -r requirements.txt
-python seed_data.py        # optional: load the demo dataset into the database
+python seed_data.py
 uvicorn main:app --reload
 ```
 
-The API will be running at `http://localhost:8000` (interactive docs at `http://localhost:8000/docs`).
-
-### Step 2: Start the Frontend
-
-Open a **second terminal** and run:
-
+**Terminal 2 — Frontend:**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-The app will be running at `http://localhost:5173`.
+### After Pulling Changes
 
-### Step 3: Open in Browser
+When you pull new code from the repo, re-seed the database to sync data:
 
-Go to [http://localhost:5173](http://localhost:5173) in your browser. Start on the Dashboard, open the **Org Chart**, and scrub the timeline to watch the structure evolve. Then drill into a role or a person to follow either history, and toggle the **Staff** persona to see the individual's own view.
+```bash
+npm run seed
+```
 
-> **Note:** Both backend and frontend must be running at the same time. The frontend communicates with the backend API on port 8000.
+Then restart the backend (or use `npm run setup` to do both).
+
+### Open in Browser
+
+Go to [http://localhost:5173](http://localhost:5173). Start on the Dashboard, open the **Org Chart**, and scrub the timeline to watch the structure evolve. Then drill into a role or a person to follow either history, and toggle the **Staff** persona to see the individual's own view.
+
+> **Note:** The database file (`orglens.db`) is gitignored — each team member generates it locally by running `npm run seed` or `python seed_data.py`. This ensures everyone has identical data.
 
 ### Importing your own data
 

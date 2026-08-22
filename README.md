@@ -15,23 +15,23 @@ These are two views of the same story. A person occupies a role at a point in ti
 ## Screenshots
 
 ### Dashboard
-![Dashboard overview](main/screenshots/dashboard.png)
+![Dashboard overview](orglens/screenshots/dashboard.png)
 *Real-time stats, recent movements, and flagged anomalies at a glance.*
 
 ### Interactive Org Chart (Time-Travel)
-![Org Chart with timeline scrubber](main/screenshots/org-chart.png)
+![Org Chart with timeline scrubber](orglens/screenshots/org-chart.png)
 *Scrub the timeline to any date and see how the structure and occupants change.*
 
 ### Role Evolution Timeline
-![Role history detail](main/screenshots/role-history.png)
+![Role history detail](orglens/screenshots/role-history.png)
 *Full chronological history of a role: mutations, occupants, reporting shifts.*
 
 ### Person Career Journey
-![Person detail journey](main/screenshots/person-journey.png)
+![Person detail journey](orglens/screenshots/person-journey.png)
 *A person's complete trajectory — hires, promotions, transfers, and department changes.*
 
 ### Staff Persona View
-![Staff self-scoped view](main/screenshots/staff-view.png)
+![Staff self-scoped view](orglens/screenshots/staff-view.png)
 *Individual-scoped view showing personal role relevancy, upskilling plan, and wellbeing.*
 
 > **Note:** To add your own screenshots, capture the relevant pages and save them as PNG files in `docs/screenshots/`.

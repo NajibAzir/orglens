@@ -42,18 +42,18 @@ export default function Sidebar() {
 
   const staffSections = [
     {
+      label: 'STRUCTURE & ROLES',
+      items: [
+        { name: 'Interactive Org Chart', path: '/org-chart', icon: Network },
+        { name: 'Role Evolution', path: '/roles', icon: History, adminOnly: true },
+      ]
+    },
+    {
       label: 'MY CAREER & UPSKILLING',
       items: [
         { name: 'My Career Journey', path: `/people/${staffEmployeeId}`, icon: Users },
         { name: 'My Upskill Plan', path: '/my-upskill', icon: BookOpen, badge: 'Plan', badgeType: 'live' },
         { name: 'My Role Relevancy', path: '/my-relevancy', icon: TrendingUp, badge: 'AI', badgeType: 'ai' },
-      ]
-    },
-    {
-      label: 'STRUCTURE & ROLES',
-      items: [
-        { name: 'Interactive Org Chart', path: '/org-chart', icon: Network },
-        { name: 'Role Evolution', path: '/roles', icon: History },
       ]
     },
     {

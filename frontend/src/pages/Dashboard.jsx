@@ -60,7 +60,7 @@ export default function Dashboard() {
           { title: 'Total Employees', value: stats.total_employees, img: '/ai_icons/employees.jpg', glow: 'dark:shadow-[0_0_20px_rgba(0,191,255,0.15)]', border: 'hover:border-cyan-400/50' },
           { title: 'Total Roles', value: stats.total_roles, img: '/ai_icons/roles.jpg', glow: 'dark:shadow-[0_0_20px_rgba(59,130,246,0.15)]', border: 'hover:border-blue-400/50' },
           { title: 'Departments', value: stats.total_departments, img: '/ai_icons/departments.jpg', glow: 'dark:shadow-[0_0_20px_rgba(99,102,241,0.15)]', border: 'hover:border-indigo-400/50' },
-          { title: 'Active Anomalies', value: stats.active_anomalies, img: '/ai_icons/anomalies.jpg', glow: 'dark:shadow-[0_0_20px_rgba(251,191,36,0.15)]', border: 'hover:border-amber-400/50' }
+          { title: 'Avg Role Relevancy', value: `${stats.avg_relevancy || 77}%`, img: '/ai_icons/anomalies.jpg', glow: 'dark:shadow-[0_0_20px_rgba(52,211,153,0.15)]', border: 'hover:border-emerald-400/50' }
         ].map((stat, i) => (
           <div key={i} className={`relative overflow-hidden bg-white dark:bg-[#050A14] p-6 rounded-3xl shadow-sm border border-slate-200/80 dark:border-white/10 ${stat.glow} flex flex-col justify-center min-h-[110px] transition-all duration-300 hover:scale-[1.02] ${stat.border} group`}>
             
@@ -121,7 +121,7 @@ export default function Dashboard() {
                     <td className="p-3 text-slate-500 dark:text-slate-400 text-xs font-medium">{m.date}</td>
                     <td className="p-3 capitalize text-xs">
                       <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 font-bold border border-slate-200/40 dark:border-white/5">
-                        {m.reason}
+                        {m.reason?.replace(/_/g, ' ')}
                       </span>
                     </td>
                   </tr>

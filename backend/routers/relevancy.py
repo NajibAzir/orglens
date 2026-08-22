@@ -118,10 +118,12 @@ def get_all_role_relevancy(db: sqlite3.Connection = Depends(get_db)):
     query = """
         SELECT r.id as role_id, r.title, r.code, r.level, r.department_id, r.status,
                d.name as department_name, d.color as department_color,
-               rr.relevancy_score, rr.industry_trend, rr.trend_direction, rr.upskill_suggestions, rr.assessed_date
+               rr.relevancy_score, rr.industry_trend, rr.trend_direction, rr.upskill_suggestions, rr.assessed_date,
+               (SELECT COUNT(*) FROM assignments a WHERE a.role_id = r.id AND a.end_date IS NULL) as occupant_count
         FROM roles r
         LEFT JOIN departments d ON r.department_id = d.id
         LEFT JOIN role_relevancy rr ON r.id = rr.role_id
+            AND rr.assessed_date = (SELECT MAX(rr2.assessed_date) FROM role_relevancy rr2 WHERE rr2.role_id = r.id)
         ORDER BY r.department_id, r.id
     """
     cursor = db.execute(query)
@@ -205,7 +207,9 @@ def get_upskilling_recommendations(db: sqlite3.Connection = Depends(get_db)):
         LEFT JOIN roles r ON a.role_id = r.id
         LEFT JOIN departments d ON r.department_id = d.id
         LEFT JOIN role_relevancy rr ON r.id = rr.role_id
+            AND rr.assessed_date = (SELECT MAX(rr2.assessed_date) FROM role_relevancy rr2 WHERE rr2.role_id = r.id)
         WHERE e.status = 'active'
+        GROUP BY e.id
         ORDER BY d.id, e.name
     """
     cursor = db.execute(query)

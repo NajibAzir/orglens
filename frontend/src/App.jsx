@@ -19,6 +19,7 @@ import RoleRelevancyTrends from './pages/RoleRelevancyTrends';
 import StaffUpskillingMatrix from './pages/StaffUpskillingMatrix';
 import PersonalUpskillPlan from './pages/PersonalUpskillPlan';
 import PersonalRoleRelevancy from './pages/PersonalRoleRelevancy';
+import AdminOnlyRoute from './components/AdminOnlyRoute';
 
 function App() {
   const { theme } = useContext(AppContext);
@@ -66,8 +67,8 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/top-nav-demo" element={<TopNavDemo />} />
             <Route path="/org-chart" element={<OrgChart />} />
-            <Route path="/roles" element={<RoleHistory />} />
-            <Route path="/roles/:id" element={<RoleDetail />} />
+            <Route path="/roles" element={<AdminOnlyRoute><RoleHistory /></AdminOnlyRoute>} />
+            <Route path="/roles/:id" element={<AdminOnlyRoute><RoleDetail /></AdminOnlyRoute>} />
             <Route path="/people" element={<PersonJourney />} />
             <Route path="/people/:id" element={<PersonDetail />} />
             <Route path="/relevancy" element={<RoleRelevancyTrends />} />

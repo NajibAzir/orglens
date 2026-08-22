@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getRoleRelevancyAll, getMacroTrends } from '../utils/api';
 import { 
   TrendingUp, TrendingDown, Minus, Sparkles, ShieldAlert, 
-  Search, ArrowRight, Zap, Target, BookOpen, Layers, CheckCircle2, AlertTriangle 
+  Search, ArrowRight, Zap, Target, BookOpen, Layers, CheckCircle2, AlertTriangle, ChevronDown 
 } from 'lucide-react';
 
 export default function RoleRelevancyTrends() {
@@ -14,6 +14,7 @@ export default function RoleRelevancyTrends() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDept, setSelectedDept] = useState('All');
   const [trendFilter, setTrendFilter] = useState('All');
+  const [macroTrendsOpen, setMacroTrendsOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -159,19 +160,32 @@ export default function RoleRelevancyTrends() {
 
       {/* ── Macro Technology Trends Radar ── */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <button 
+          onClick={() => setMacroTrendsOpen(!macroTrendsOpen)}
+          className="w-full flex items-center justify-between group"
+        >
           <div className="flex items-center gap-2">
             <Sparkles size={18} className="text-cyan-500 dark:text-cyan-400" />
             <h2 className="text-lg font-black tracking-tight text-slate-900 dark:text-white">
               Technology Macro-Trends Radar
             </h2>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+              {macroTrends.length} trends
+            </span>
           </div>
-          <span className="text-xs font-bold text-slate-400">
-            Market Signals & AI Transformations
-          </span>
-        </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-slate-400 hidden sm:inline">
+              Market Signals & AI Transformations
+            </span>
+            <ChevronDown 
+              size={16} 
+              className={`text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-transform duration-200 ${macroTrendsOpen ? 'rotate-0' : '-rotate-90'}`} 
+            />
+          </div>
+        </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {macroTrendsOpen && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {macroTrends.map((trend) => {
             const isUp = trend.trend_direction === 'up';
             return (
@@ -228,6 +242,7 @@ export default function RoleRelevancyTrends() {
             );
           })}
         </div>
+        )}
       </div>
 
       {/* ── Role Relevancy Evaluation Matrix ── */}
@@ -284,6 +299,7 @@ export default function RoleRelevancyTrends() {
                 <tr className="border-b border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-slate-900/60 text-slate-400 uppercase text-[10px] font-black tracking-wider">
                   <th className="py-3.5 px-5">Role & Code</th>
                   <th className="py-3.5 px-4">Department</th>
+                  <th className="py-3.5 px-4">Occupants</th>
                   <th className="py-3.5 px-4">Relevancy Score</th>
                   <th className="py-3.5 px-4">Market Trajectory</th>
                   <th className="py-3.5 px-5">Industry Rationale & Upskill Courses</th>
@@ -326,6 +342,20 @@ export default function RoleRelevancyTrends() {
                           }}
                         >
                           {role.department_name || 'Engineering'}
+                        </span>
+                      </td>
+
+                      {/* Occupant Count */}
+                      <td className="py-4 px-4 whitespace-nowrap text-center">
+                        <span className={`text-xs font-black ${
+                          role.occupant_count === 0 
+                            ? 'text-slate-400 dark:text-slate-500' 
+                            : 'text-slate-800 dark:text-slate-200'
+                        }`}>
+                          {role.occupant_count || 0}
+                        </span>
+                        <span className="text-[9px] text-slate-400 ml-1">
+                          {role.occupant_count === 0 ? 'vacant' : role.occupant_count === 1 ? 'person' : 'people'}
                         </span>
                       </td>
 
@@ -376,20 +406,29 @@ export default function RoleRelevancyTrends() {
 
                       {/* Industry Rationale & Courses */}
                       <td className="py-4 px-5 max-w-md">
-                        <p className="text-slate-600 dark:text-slate-300 text-[11px] font-medium leading-tight">
+                        <p className="text-slate-600 dark:text-slate-300 text-[11px] font-medium leading-tight line-clamp-2">
                           {role.industry_trend}
                         </p>
                         {role.upskill_suggestions && role.upskill_suggestions.length > 0 && (
-                          <div className="flex items-center gap-1.5 flex-wrap mt-2">
-                            {role.upskill_suggestions.map((sug, sIdx) => (
-                              <span
-                                key={sIdx}
-                                className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10"
-                                title={`Relevance gain: ${sug.relevance_gain || '+20%'}, Duration: ${sug.duration || '4 weeks'}`}
-                              >
-                                🎓 {sug.course} ({sug.relevance_gain || '+20%'})
-                              </span>
-                            ))}
+                          <div className="mt-2 group relative">
+                            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-lg bg-setel-50 dark:bg-cyan-950/40 text-setel-700 dark:text-cyan-300 border border-setel-200 dark:border-cyan-500/30 cursor-default">
+                              <BookOpen size={11} />
+                              {role.upskill_suggestions.length} course{role.upskill_suggestions.length !== 1 ? 's' : ''} recommended
+                            </span>
+                            {/* Tooltip on hover */}
+                            <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-50 w-72">
+                              <div className="bg-white dark:bg-[#0C1527] border border-slate-200 dark:border-white/10 rounded-xl shadow-lg dark:shadow-[0_8px_30px_rgba(0,0,0,0.6)] p-3 space-y-1.5">
+                                {role.upskill_suggestions.map((sug, sIdx) => (
+                                  <div key={sIdx} className="flex items-start gap-2 text-[10px]">
+                                    <span className="text-setel-500 dark:text-cyan-400 mt-0.5 flex-shrink-0">•</span>
+                                    <div>
+                                      <p className="font-bold text-slate-800 dark:text-slate-200">{sug.course}</p>
+                                      <p className="text-slate-400">{sug.duration} • {sug.relevance_gain || '+20%'} relevance</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
                           </div>
                         )}
                       </td>

@@ -594,6 +594,88 @@ for w in wellbeing_data:
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """, w)
 
+print("9. Seeding Staff Upskilling Progress (Varied Learning Statuses)...")
+# Realistic mix: some completed, some in_progress, some not_started
+# course_name must match exactly with role_relevancy_config courses
+upskilling_progress_data = [
+    # Emp 3 (Ahmad Rizal) - Role 3 Eng Manager - completed 1, doing 1
+    (3, "Gergely Orosz: The Pragmatic Engineer - Engineering Management", "completed", "2024-01-15", "2024-03-01", "Excellent framework for 1-on-1s and skip-levels."),
+    (3, "AWS Solutions Architect Associate (SAA-C03)", "in_progress", "2024-06-01", None, "Currently on Module 5 of 8."),
+    
+    # Emp 7 (Siti) - Role 4 Tech Lead - completed 1, in_progress 1
+    (7, "Designing Data-Intensive Applications (Martin Kleppmann Study Group)", "completed", "2023-06-01", "2023-09-15", "Applied event sourcing patterns to payment pipeline."),
+    (7, "PCI-DSS v4.0 Implementation & Compliance", "in_progress", "2024-04-01", None, "Halfway through compliance audit preparation module."),
+    
+    # Emp 4 (Muthu) - Role 5 Sr SWE - in_progress 1
+    (4, "Ardan Labs: Ultimate Go - Advanced Engineering", "in_progress", "2024-05-01", None, "Working through concurrency patterns section."),
+    
+    # Emp 5 (Priya) - Role 5 Sr SWE - completed 1, in_progress 1
+    (5, "Ardan Labs: Ultimate Go - Advanced Engineering", "completed", "2023-09-01", "2023-11-15", "Strong grasp of channel patterns and context propagation."),
+    (5, "Apache Kafka for Event-Driven Architecture (Confluent)", "in_progress", "2024-03-01", None, "Building consumer group labs."),
+    
+    # Emp 6 (Chong Wei Lin) - Role 6 SWE - in_progress 1
+    (6, "Docker & Kubernetes: The Practical Guide (Udemy - Maximilian)", "in_progress", "2024-06-01", None, "Completed Docker section, starting K8s pods."),
+    
+    # Emp 25 (Vikram) - Role 7 Jr SWE - in_progress 1
+    (25, "AI-Assisted Development: GitHub Copilot & Prompt Engineering for Devs", "in_progress", "2024-07-01", None, "Experimenting with Copilot in daily workflow."),
+    
+    # Emp 8 (Raj) - Role 8 Frontend Lead - completed 1, in_progress 1
+    (8, "Epic React (Kent C. Dodds) - Advanced Patterns & Performance", "completed", "2023-03-01", "2023-06-01", "Applied compound component patterns to design system."),
+    (8, "Web Performance Fundamentals (Todd Gardner - Frontend Masters)", "in_progress", "2024-04-01", None, "Working on Core Web Vitals optimization module."),
+    
+    # Emp 10 (Aisha) - Role 10 PM Payments - completed 1, in_progress 1
+    (10, "Fintech Product Management (Kellogg Executive Education)", "completed", "2023-06-01", "2023-08-30", "Excellent framework for payment product roadmapping."),
+    (10, "Amplitude Analytics & Experimentation Certification", "in_progress", "2024-05-01", None, "Setting up first A/B test with Amplitude."),
+    
+    # Emp 11 (Lee Mei Ling) - Role 11 UX - completed 1
+    (11, "Figma for Developers: Design Systems & Tokens (Figma Official)", "completed", "2023-09-01", "2023-11-01", "Now managing design tokens across 3 products."),
+    
+    # Emp 12 (Nurul) - Role 12 Lead Data Eng - in_progress 1
+    (12, "Databricks Certified Data Engineer Professional", "in_progress", "2024-03-01", None, "Preparing for certification exam in Q3."),
+    
+    # Emp 13 (Arjun) - Role 13 Data Eng - completed 1, in_progress 1
+    (13, "dbt Fundamentals & Advanced Materialisation (dbt Labs Official)", "completed", "2023-08-01", "2023-10-15", "Now using dbt daily for transaction analytics models."),
+    (13, "Apache Airflow: The Hands-On Guide (Astronomer/Udemy)", "in_progress", "2024-04-01", None, "Building DAGs for new streaming pipeline."),
+    
+    # Emp 14 (Wong Jia Hui) - Role 14 Data Analyst - in_progress 1
+    (14, "Google Advanced Data Analytics Certificate (Coursera)", "in_progress", "2024-02-01", None, "Completed 3 of 7 courses in the specialization."),
+    
+    # Emp 15 (Hafiz) - Role 15 QA Mgr - in_progress 1
+    (15, "ISTQB Advanced Test Manager Certification", "in_progress", "2024-01-15", None, "Studying test planning and risk-based testing modules."),
+    
+    # Emp 16 (Kavitha) - Role 16 Sr QA Auto - completed 1
+    (16, "Performance Testing with k6 & Grafana Cloud", "completed", "2023-10-01", "2024-01-15", "Set up load testing pipeline for payment APIs."),
+    
+    # Emp 17 (Lim Zhi Xian) - Role 17 Manual QA - in_progress 1 (critical upskilling)
+    (17, "Playwright Complete Guide: E2E Testing (Test Automation University)", "in_progress", "2024-06-01", None, "Struggling with TypeScript basics, needs mentoring support."),
+    
+    # Emp 20 (Ravi) - Role 19 Auto QA - completed 1
+    (20, "Contract Testing with Pact (PactFlow Official Training)", "completed", "2024-01-01", "2024-03-01", "Implemented contract tests for 3 microservices."),
+    
+    # Emp 28 (Deepa) - Role 16 Sr QA Auto - in_progress 1
+    (28, "AI-Powered Test Generation with Codium/Testim", "in_progress", "2024-05-01", None, "Evaluating Codium for regression test generation."),
+    
+    # Emp 21 (Aminah) - Role 20 Platform Head - completed 1
+    (21, "Certified Kubernetes Administrator (CKA) - Linux Foundation", "completed", "2022-06-01", "2022-10-01", "Certified. Now mentoring team on K8s best practices."),
+    
+    # Emp 22 (Chen Jia Wei) - Role 21 Sr DevOps - in_progress 1, completed 1
+    (22, "Certified Kubernetes Administrator (CKA) - Linux Foundation", "in_progress", "2024-04-01", None, "Scheduled exam for Q4 2024."),
+    (22, "HashiCorp Certified: Terraform Associate (003)", "completed", "2023-09-01", "2023-12-01", "Certified. Managing all IaC with Terraform modules."),
+    
+    # Emp 24 (Nadia) - Role 22 Cloud SRE - in_progress 1
+    (24, "AWS Certified Security - Specialty (SCS-C02)", "in_progress", "2024-05-01", None, "Studying IAM policies and encryption services."),
+    
+    # Emp 2 (Sarah Lim) - Role 23 People & Culture - completed 1, in_progress 1
+    (2, "People Analytics Specialization (Wharton - Coursera)", "completed", "2023-06-01", "2023-09-01", "Applied workforce planning models to Q4 headcount."),
+    (2, "Organisational Network Analysis with Microsoft Viva Insights", "in_progress", "2024-06-01", None, "Setting up Viva Insights for org-wide collaboration metrics."),
+]
+
+for p in upskilling_progress_data:
+    cursor.execute("""
+        INSERT INTO upskilling_progress (employee_id, course_name, status, started_date, completed_date, notes)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, p)
+
 conn.commit()
 conn.close()
 print("[SUCCESS] OrgLens Setel Database Seeded Successfully with 28 Rich Personas & Scenarios!")

@@ -27,7 +27,7 @@ These are two views of the same story. A person occupies a role at a point in ti
 
 ## The grounding scenario, built in
 
-The seeded dataset models a fictional Setel-style fintech org across **2021–2025** so the connection between role change and people movement is visible, not abstract. It intentionally encodes real storylines:
+The seeded dataset models a fictional fintech org across **2021–2025** so the connection between role change and people movement is visible, not abstract. It intentionally encodes real storylines:
 
 - **Fast-track promotion** — an engineer moves Software Engineer → Senior → Tech Lead in two years.
 - **Career stagnation** — an engineer sits in the same mid-level role for 3.5+ years (flagged as an anomaly).

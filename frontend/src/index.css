@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+  }
+}
+
+@layer utilities {
+  /* High-glass frosted panel */
+  .glass-card {
+    @apply bg-white/90 dark:bg-[#0E1726]/65 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.45)];
+  }
+
+  /* Deeper subtle glass panel */
+  .glass-card-subtle {
+    @apply bg-slate-50/80 dark:bg-[#131F37]/50 backdrop-blur-lg border border-slate-200/60 dark:border-white/5;
+  }
+
+  /* Interactive hover glass panel */
+  .glass-card-interactive {
+    @apply bg-white/90 dark:bg-[#0E1726]/65 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] transition-all duration-200 hover:border-setel-300 dark:hover:border-cyan-400/60 hover:shadow-md dark:hover:shadow-[0_0_25px_rgba(0,191,255,0.2)];
+  }
+
+  /* Glass input / search bar */
+  .glass-input {
+    @apply bg-slate-50 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200 dark:border-white/10 focus:bg-white dark:focus:bg-slate-900/90 focus:border-setel-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-setel-500/20 dark:focus:ring-cyan-400/20 outline-none transition-all;
+  }
+
+  /* Glowing neon badges & borders */
+  .glow-border-cyan {
+    @apply border border-cyan-400/50 shadow-[0_0_15px_rgba(0,191,255,0.25)];
+  }
+
+  .glow-border-emerald {
+    @apply border border-emerald-400/50 shadow-[0_0_15px_rgba(52,211,153,0.25)];
+  }
+
+  .glow-border-amber {
+    @apply border border-amber-400/50 shadow-[0_0_15px_rgba(251,191,36,0.25)];
+  }
+}
+
+/* Custom frosted scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 191, 255, 0.5);
+}

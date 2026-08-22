@@ -22,10 +22,10 @@ const getLayoutedElements = (nodes, edges) => {
 
   dagreGraph.setGraph({
     rankdir: 'TB',
-    nodesep: 60,  // Horizontal distance between parallel sibling nodes
-    ranksep: 80,  // Vertical distance between hierarchy levels
-    align: 'DL',
-    ranker: 'tight-tree'
+    nodesep: 100,  // Horizontal distance between parallel sibling nodes
+    ranksep: 120,  // Vertical distance between hierarchy levels
+    align: undefined,
+    ranker: 'network-simplex'
   });
 
   nodes.forEach((node) => {
@@ -192,8 +192,8 @@ export default function OrgChart() {
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
           fitView
-          fitViewOptions={{ padding: 0.15, minZoom: 0.4, maxZoom: 1.2 }}
-          minZoom={0.2}
+          fitViewOptions={{ padding: 0.2, minZoom: 0.15, maxZoom: 1.2 }}
+          minZoom={0.1}
           maxZoom={1.5}
           nodesDraggable={true}
           nodesConnectable={false}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/orglens-service',
+  baseURL: import.meta.env.VITE_API_URL || '/orglens-service',
 });
 
 export const getDashboardStats = () => api.get('/dashboard/stats');

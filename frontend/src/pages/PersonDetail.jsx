@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getEmployee, getMovements, getWellbeing } from '../utils/api';
+import { AppContext } from '../context/AppContext';
 import PersonMilestoneCard from '../components/PersonMilestoneCard';
 import WellbeingCard from '../components/WellbeingCard';
 import { 
   Briefcase, Mail, MapPin, Award, Calendar, 
-  ArrowLeft, ShieldAlert, Sparkles, TrendingUp
+  ArrowLeft, ShieldAlert, Sparkles, TrendingUp, HeartPulse
 } from 'lucide-react';
 
 export default function PersonDetail() {
   const { id } = useParams();
+  const { persona } = useContext(AppContext);
   const [person, setPerson] = useState(null);
   const [movements, setMovements] = useState([]);
   const [wellbeing, setWellbeing] = useState([]);
@@ -98,7 +100,7 @@ export default function PersonDetail() {
             <div className="bg-slate-50 dark:bg-[#090F1D] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center flex-1 md:flex-initial min-w-[100px]">
               <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-400 block">Tenure</span>
               <span className="text-lg font-black text-slate-900 dark:text-slate-50 font-mono mt-0.5 block">
-                {person.hire_date ? `${Math.floor((new Date('2025-06-30') - new Date(person.hire_date)) / (1000 * 60 * 60 * 24 * 365.25))} yrs` : '3.5 yrs'}
+                {person.hire_date ? `${Math.floor((new Date() - new Date(person.hire_date)) / (1000 * 60 * 60 * 24 * 365.25))} yrs` : '3.5 yrs'}
               </span>
             </div>
             <div className="bg-slate-50 dark:bg-[#090F1D] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center flex-1 md:flex-initial min-w-[100px]">
@@ -173,20 +175,38 @@ export default function PersonDetail() {
 
         {/* Right Sidebar: Wellbeing */}
         <div className="space-y-6">
-          {/* Active Wellbeing Check-in Card (if any) */}
-          {wellbeing.length > 0 && (
+          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+            Change Wellbeing Telemetry
+          </h2>
+          {wellbeing.length > 0 ? (
             <div className="space-y-4">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                Change Wellbeing Telemetry
-              </h2>
               {wellbeing.map(c => (
-                <WellbeingCard key={c.id} checkin={{
+                <WellbeingCard key={c.id} persona={persona} checkin={{
                   id: c.id,
                   name: person.name,
                   changesCount: c.org_changes_count,
-                  changes: [`Triggered by: ${c.triggered_by.replace(/_/g, ' ')}`]
+                  changes: [`Triggered by: ${c.triggered_by.replace(/_/g, ' ')}`],
+                  responded: c.responded,
+                  responseDate: c.response_date,
+                  stressLevel: c.stress_level,
+                  notes: c.notes,
+                  triggerDate: c.trigger_date
                 }} />
               ))}
+            </div>
+          ) : (
+            <div className="bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-6 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]">
+              <div className="flex flex-col items-center text-center gap-3 py-4">
+                <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-700">
+                  <HeartPulse size={24} className="text-slate-400 dark:text-slate-500" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No Wellbeing Events</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    No organizational changes have triggered a wellbeing check-in for this employee.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </div>

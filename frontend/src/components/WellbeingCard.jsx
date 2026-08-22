@@ -1,12 +1,72 @@
 import { useState } from 'react';
-import { HeartPulse, X } from 'lucide-react';
+import { HeartPulse, X, CheckCircle2, AlertCircle } from 'lucide-react';
 
-export default function WellbeingCard({ checkin }) {
+export default function WellbeingCard({ checkin, persona = 'admin' }) {
   const [dismissed, setDismissed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   if (dismissed) return null;
 
+  // Already responded - show completed summary
+  if (checkin.responded) {
+    const stressLabel = ['', 'Struggling', 'Adjusting', 'Neutral', 'Coping Well', 'Thriving'][checkin.stressLevel] || 'Responded';
+    const stressColor = checkin.stressLevel >= 4
+      ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-500/30'
+      : checkin.stressLevel >= 3
+      ? 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-500/30'
+      : 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-500/30';
+
+    return (
+      <div className="bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-5 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-xl border border-emerald-200/60 dark:border-emerald-500/30">
+            <CheckCircle2 size={18} />
+          </div>
+          <div>
+            <h3 className="text-sm font-black text-slate-900 dark:text-slate-50">Check-in Completed</h3>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+              Responded on {checkin.responseDate || 'N/A'}
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          {/* Trigger Info */}
+          <div className="bg-slate-50/80 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/80 dark:border-white/10">
+            <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block mb-1">Trigger Event</span>
+            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {checkin.changes?.[0] || 'Organizational change'}
+            </p>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+              {checkin.changesCount} organizational change{checkin.changesCount !== 1 ? 's' : ''} • {checkin.triggerDate}
+            </p>
+          </div>
+
+          {/* Stress Level */}
+          {checkin.stressLevel && (
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Wellbeing Score</span>
+              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${stressColor}`}>
+                {checkin.stressLevel}/5 — {stressLabel}
+              </span>
+            </div>
+          )}
+
+          {/* Notes */}
+          {checkin.notes && (
+            <div className="bg-slate-50/80 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/80 dark:border-white/10">
+              <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block mb-1">Employee Notes</span>
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium leading-relaxed italic">
+                "{checkin.notes}"
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Just submitted in this session
   if (submitted) {
     return (
       <div className="bg-emerald-50/90 dark:bg-emerald-950/40 backdrop-blur-xl border border-emerald-200 dark:border-emerald-500/40 p-6 rounded-3xl text-center shadow-sm dark:shadow-[0_0_20px_rgba(52,211,153,0.2)]">
@@ -17,8 +77,46 @@ export default function WellbeingCard({ checkin }) {
     );
   }
 
+  // Pending - show differently based on persona
+  if (persona === 'admin') {
+    // Admin sees status summary only, not the questionnaire
+    return (
+      <div className="bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-amber-200 dark:border-amber-500/30 p-5 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 rounded-xl border border-amber-200/60 dark:border-amber-500/30">
+            <AlertCircle size={18} />
+          </div>
+          <div>
+            <h3 className="text-sm font-black text-slate-900 dark:text-slate-50">Pending Response</h3>
+            <p className="text-[10px] text-amber-600 dark:text-amber-400 font-bold">Awaiting employee feedback</p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className="bg-slate-50/80 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/80 dark:border-white/10">
+            <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block mb-1">Trigger Event</span>
+            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {checkin.changes?.[0] || 'Organizational change'}
+            </p>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+              {checkin.changesCount} organizational change{checkin.changesCount !== 1 ? 's' : ''} • {checkin.triggerDate}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between px-1">
+            <span className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">Sent to: {checkin.name}</span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/30">
+              Not yet responded
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Staff sees the questionnaire
   return (
-    <div className="bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-6 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] relative">
+    <div className="bg-white/90 dark:bg-[#0C1527]/70 backdrop-blur-xl border border-amber-200 dark:border-amber-500/30 p-6 rounded-3xl shadow-sm dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] relative">
       <button onClick={() => setDismissed(true)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
         <X size={18} />
       </button>
@@ -27,7 +125,7 @@ export default function WellbeingCard({ checkin }) {
         <div className="p-2.5 bg-setel-50 dark:bg-cyan-950/50 text-setel-600 dark:text-cyan-400 rounded-2xl border border-setel-200/60 dark:border-cyan-500/30">
           <HeartPulse size={22} />
         </div>
-        <h2 className="text-lg font-black text-slate-900 dark:text-slate-50">Transition Wellbeing Check-in</h2>
+        <h2 className="text-base font-black text-slate-900 dark:text-slate-50">Transition Wellbeing Check-in</h2>
       </div>
       
       <p className="text-slate-700 dark:text-slate-300 text-xs mb-3 font-medium">

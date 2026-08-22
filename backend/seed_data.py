@@ -172,15 +172,15 @@ emps_data = [
     (5, "Priya Sharma", "Female", "Indian", "L4", ["Golang", "FastAPI", "Docker", "Payment Gateways"], "Exceeds Expectations", "2021-01-01", None),
     (6, "Chong Wei Lin", "Male", "Chinese", "L4", ["Golang", "Microservices", "Unit Testing", "Git"], "Meets Expectations", "2021-03-01", None),
     (7, "Siti Nurhaliza binti Ahmad", "Female", "Malay", "L5", ["Distributed Systems", "Golang", "Kafka", "Cloud"], "High Potential", "2021-01-01", None),
-    (8, "Raj Kumar", "Male", "Indian", "Lead", ["React", "TypeScript", "Tailwind CSS", "Next.js"], "Exceeds Expectations", "2021-01-01", None),
+    (8, "Raj Kumar", "Male", "Indian", "Lead", ["React", "TypeScript", "Tailwind CSS", "Next.js"], "Exceeds Expectations", "2021-03-01", None),
     (9, "Faizal bin Mohd Nor", "Male", "Malay", "Director", ["Product Vision", "Fintech Strategy", "UX Discovery"], "Exceeds Expectations", "2021-01-01", None),
     (10, "Aisha binti Zainal", "Female", "Malay", "L4", ["Product Roadmapping", "User Stories", "A/B Testing"], "High Potential", "2021-01-01", None),
     (11, "Lee Mei Ling", "Female", "Chinese", "L4", ["Figma", "Design Systems", "Mobile UI/UX", "User Research"], "Exceeds Expectations", "2021-06-01", None),
-    (12, "Nurul Izzah binti Kamal", "Female", "Malay", "Lead", ["Apache Spark", "Snowflake", "dbt", "Airflow", "Python"], "High Potential", "2021-01-01", None),
+    (12, "Nurul Izzah binti Kamal", "Female", "Malay", "Lead", ["Apache Spark", "Snowflake", "dbt", "Airflow", "Python"], "High Potential", "2021-06-01", None),
     (13, "Arjun Nair", "Male", "Indian", "L3", ["Python", "SQL", "Airflow", "ETL", "Kafka"], "Meets Expectations", "2021-06-01", None),
-    (14, "Wong Jia Hui", "Female", "Chinese", "L3", ["SQL", "Tableau", "Data Modeling", "Metabase"], "Meets Expectations", "2021-03-01", None),
-    (15, "Muhammad Hafiz", "Male", "Malay", "Lead", ["QA Strategy", "Release Management", "Selenium", "Postman"], "Meets Expectations", "2022-01-01", None),
-    (16, "Kavitha Devi", "Female", "Indian", "L4", ["Playwright", "Cypress", "CI/CD Automation", "TypeScript"], "High Potential", "2021-06-01", None),
+    (14, "Wong Jia Hui", "Female", "Chinese", "L3", ["SQL", "Tableau", "Data Modeling", "Metabase"], "Meets Expectations", "2021-09-01", None),
+    (15, "Muhammad Hafiz", "Male", "Malay", "Lead", ["QA Strategy", "Release Management", "Selenium", "Postman"], "Meets Expectations", "2021-01-01", None),
+    (16, "Kavitha Devi", "Female", "Indian", "L4", ["Playwright", "Cypress", "CI/CD Automation", "TypeScript"], "High Potential", "2021-01-01", None),
     (17, "Lim Zhi Xian", "Male", "Chinese", "L2", ["Manual Testing", "Jira", "Regression Passes"], "Needs Upskilling", "2021-09-01", None),
     (18, "Nor Azman bin Yusof", "Male", "Malay", "L2", ["Manual Testing", "Hardware POS Testing"], "Exited (Company Pivot)", "2021-01-01", "2023-06-01"),
     (19, "Tan Shu Qi", "Female", "Chinese", "L2", ["Manual Regression", "Bug Tracking"], "Exited (Role Replaced by AI)", "2021-01-01", "2024-03-01"),
@@ -215,49 +215,98 @@ assigns = [
     (3, 3, '2021-01-01', None, 'hired', 'Joined as Engineering Manager'),
     
     # Fast Track Storyline: Siti Nurhaliza (Emp 7) -> Tech Lead (Role 4)
-    (5, 7, '2021-01-01', '2022-01-01', 'hired', 'Started as Software Engineer'),
-    (5, 7, '2022-01-01', '2023-01-01', 'promoted', 'Promoted to Senior Software Engineer'),
-    (4, 7, '2023-01-01', None, 'promoted', 'Fast-tracked to Tech Lead in 2 years'),
+    (6, 7, '2021-01-01', '2021-09-01', 'hired', 'Joined as Software Engineer on core backend services'),
+    (5, 7, '2021-09-01', '2022-06-01', 'promoted', 'Promoted to Senior Software Engineer after strong delivery'),
+    (5, 7, '2022-06-01', '2023-01-01', 'scope_increase', 'Expanded scope to lead payments squad technical direction'),
+    (4, 7, '2023-01-01', None, 'promoted', 'Fast-tracked to Tech Lead (Payments) in 2 years'),
     
-    # Muthu Krishnan (Emp 4) & Priya Sharma (Emp 5) & Chong Wei Lin (Emp 6)
-    (5, 4, '2021-01-01', None, 'hired', 'Senior Backend Engineer on Payments'),
-    (5, 5, '2021-01-01', None, 'hired', 'Senior Software Engineer on Core APIs'),
-    (6, 6, '2021-03-01', None, 'hired', 'Backend Software Engineer'),
+    # Muthu Krishnan (Emp 4) - Senior Backend Engineer with lateral growth
+    (6, 4, '2021-01-01', '2022-03-01', 'hired', 'Joined as Software Engineer on transaction processing'),
+    (5, 4, '2022-03-01', None, 'promoted', 'Promoted to Senior Software Engineer after leading payment gateway integration'),
+    
+    # Priya Sharma (Emp 5) - Senior SWE with project rotations
+    (6, 5, '2021-01-01', '2021-08-01', 'hired', 'Joined as Software Engineer on core APIs'),
+    (5, 5, '2021-08-01', '2023-06-01', 'promoted', 'Promoted to Senior Software Engineer on high-concurrency services'),
+    (5, 5, '2023-06-01', None, 'lateral', 'Lateral rotation to wallet microservices squad for breadth exposure'),
+    
+    # Chong Wei Lin (Emp 6) - Backend SWE with skill expansion
+    (7, 6, '2021-03-01', '2022-01-01', 'hired', 'Joined as Junior Engineer on API maintenance'),
+    (6, 6, '2022-01-01', None, 'promoted', 'Promoted to Software Engineer after completing Go certification'),
     
     # Stagnant Career Storyline: Ibrahim bin Osman (Emp 27) - 3.5+ years mid level
-    (6, 27, '2021-06-01', None, 'hired', 'Software Engineer - no promotion for 3.5+ years'),
+    (6, 27, '2021-06-01', None, 'hired', 'Software Engineer - no promotion for 3.5+ years despite adequate performance'),
     
-    # Junior SWE (Emp 25)
-    (7, 25, '2021-01-01', None, 'hired', 'Junior Engineer handling bug fixes'),
+    # Junior SWE Vikram (Emp 25) - has shown recent growth
+    (7, 25, '2021-01-01', '2023-06-01', 'hired', 'Junior Engineer handling bug fixes and unit tests'),
+    (7, 25, '2023-06-01', None, 'scope_increase', 'Expanded responsibilities to include feature development and code reviews'),
     
-    # Frontend Lead (Emp 8) & Dev (Emp 26)
-    (8, 8, '2021-03-01', None, 'hired', 'Hired as Frontend Lead'),
-    (8, 26, '2022-06-01', None, 'hired', 'Frontend Developer'),
+    # Frontend Lead Raj Kumar (Emp 8) - progression from IC to Lead
+    (6, 8, '2021-03-01', '2022-01-01', 'hired', 'Joined as Frontend Developer on merchant portal'),
+    (8, 8, '2022-01-01', None, 'promoted', 'Promoted to Frontend Lead after architecting the design system'),
     
-    # Product Team
-    (9, 9, '2021-01-01', None, 'hired', 'Head of Product'),
-    (10, 10, '2021-01-01', None, 'hired', 'Senior PM on Fueling & Wallet'),
-    (11, 11, '2021-06-01', None, 'hired', 'Lead UX Designer'),
+    # Frontend Dev Liew Pei San (Emp 26)
+    (8, 26, '2022-06-01', None, 'hired', 'Joined as Frontend Developer under Raj Kumar'),
     
-    # Data Team
-    (12, 12, '2021-06-01', None, 'hired', 'Lead Data Engineer'),
-    (13, 13, '2021-06-01', None, 'hired', 'Data Engineer on ETL'),
-    (14, 14, '2021-09-01', None, 'hired', 'Data Analyst on Telemetry'),
+    # Head of Product Faizal (Emp 9) - external senior hire
+    (9, 9, '2021-01-01', None, 'hired', 'Joined as Head of Product from Grab Financial Group'),
     
-    # QA Department Transformation Storyline (Manual shrinking, Automation growing)
-    (15, 15, '2021-01-01', None, 'hired', 'QA Manager'),
-    (16, 16, '2021-01-01', None, 'hired', 'Senior QA Automation'),
-    (17, 17, '2021-09-01', None, 'hired', 'Manual QA Tester (At Risk)'),
+    # PM Payments Aisha (Emp 10) - internal growth
+    (11, 10, '2021-01-01', '2022-03-01', 'hired', 'Joined as Associate PM supporting UX research'),
+    (10, 10, '2022-03-01', None, 'promoted', 'Promoted to Product Manager (Payments) after launching fuel loyalty program'),
+    
+    # UX Designer Lee Mei Ling (Emp 11) - expanded scope
+    (11, 11, '2021-06-01', '2023-01-01', 'hired', 'Joined as UX Designer on consumer mobile app'),
+    (11, 11, '2023-01-01', None, 'scope_increase', 'Elevated to Senior UX Designer; now owns end-to-end design system'),
+    
+    # Lead Data Engineer Nurul Izzah (Emp 12) - progression
+    (13, 12, '2021-06-01', '2022-09-01', 'hired', 'Joined as Data Engineer building ETL pipelines'),
+    (12, 12, '2022-09-01', None, 'promoted', 'Promoted to Lead Data Engineer after architecting streaming lakehouse'),
+    
+    # Data Engineer Arjun (Emp 13) - lateral rotation
+    (14, 13, '2021-06-01', '2022-06-01', 'hired', 'Joined as Data Analyst on reporting dashboards'),
+    (13, 13, '2022-06-01', None, 'lateral', 'Lateral move to Data Engineer role to focus on pipeline development'),
+    
+    # Data Analyst Wong Jia Hui (Emp 14)
+    (14, 14, '2021-09-01', '2023-03-01', 'hired', 'Joined as Junior Data Analyst on telemetry'),
+    (14, 14, '2023-03-01', None, 'scope_increase', 'Expanded scope to include predictive analytics and ML model validation'),
+    
+    # QA Manager Muhammad Hafiz (Emp 15) - evolved from IC
+    (16, 15, '2021-01-01', '2022-06-01', 'hired', 'Joined as Senior QA Engineer leading test strategy'),
+    (15, 15, '2022-06-01', None, 'promoted', 'Promoted to QA Manager to oversee automation transformation'),
+    
+    # Senior QA Automation Kavitha Devi (Emp 16) - growth in automation
+    (19, 16, '2021-01-01', '2022-01-01', 'hired', 'Joined as QA Automation Engineer on API testing'),
+    (16, 16, '2022-01-01', None, 'promoted', 'Promoted to Senior QA Engineer (Automation) after building Playwright framework'),
+    
+    # Manual QA Tester Lim Zhi Xian (Emp 17) - at risk
+    (17, 17, '2021-09-01', None, 'hired', 'Manual QA Tester - role declining due to automation'),
+    
+    # Manual QA Tester II (Emp 18) - exited
     (18, 18, '2021-01-01', '2023-06-01', 'exited', 'Manual Tester phased out during automation migration'),
-    (19, 19, '2021-01-01', '2024-03-01', 'exited', 'Manual Tester exit'),
+    
+    # Manual Tester (Emp 19) exit -> replaced by Automation QA (Emp 20)
+    (17, 19, '2021-01-01', '2024-03-01', 'exited', 'Manual Tester exit due to automation transition'),
     (19, 20, '2023-10-01', None, 'hired', 'Automation QA Engineer hired to replace manual testing'),
-    (16, 28, '2024-03-01', None, 'hired', 'Playwright Automation Specialist'),
+    
+    # Deepa Lakshmi (Emp 28) - Playwright specialist
+    (16, 28, '2024-03-01', None, 'hired', 'Joined as Playwright Automation Specialist'),
     
     # Platform Engineering Split Storyline (Q3 2023)
-    (20, 21, '2023-07-01', None, 'transferred', 'Transferred from Eng to Head of Platform'),
-    (21, 22, '2023-07-01', None, 'transferred', 'DevOps Engineer moved to Platform Dept'),
-    (21, 23, '2021-01-01', '2024-01-01', 'exited', 'DevOps Engineer (Relocated)'),
-    (22, 24, '2023-07-01', None, 'transferred', 'Cloud SRE moved to Platform Dept'),
+    # Aminah (Emp 21) - from Engineering to Platform Head
+    (3, 21, '2021-01-01', '2022-06-01', 'hired', 'Joined as Senior DevOps Engineer under Engineering'),
+    (3, 21, '2022-06-01', '2023-07-01', 'scope_increase', 'Led cloud infrastructure initiative and FinOps practices'),
+    (20, 21, '2023-07-01', None, 'transferred', 'Transferred to Head of Platform Engineering in new department split'),
+    
+    # Chen Jia Wei (Emp 22) - DevOps growth
+    (6, 22, '2022-06-01', '2023-07-01', 'hired', 'Joined as DevOps Engineer under Engineering'),
+    (21, 22, '2023-07-01', None, 'transferred', 'Moved to Senior DevOps Engineer under Platform Engineering dept'),
+    
+    # Mohd Syafiq (Emp 23) - exited
+    (21, 23, '2021-01-01', '2024-01-01', 'exited', 'DevOps Engineer - relocated overseas'),
+    
+    # Nadia binti Ismail (Emp 24) - SRE with transfer
+    (6, 24, '2023-01-01', '2023-07-01', 'hired', 'Joined as Backend Engineer with SRE focus'),
+    (22, 24, '2023-07-01', None, 'transferred', 'Transferred to Cloud Security & SRE under Platform Engineering'),
 ]
 
 for a in assigns:

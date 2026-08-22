@@ -30,7 +30,6 @@ export default function Sidebar() {
       items: [
         { name: 'People & Talent Journey', path: '/people', icon: Users },
         { name: 'Staff Upskill Recommendations', path: '/upskilling', icon: GraduationCap, badge: 'AI', badgeType: 'ai' },
-        { name: 'Work & Jira Analysis', path: '/ticketing', icon: BarChart3, badge: 'AI', badgeType: 'ai' },
       ]
     },
     {

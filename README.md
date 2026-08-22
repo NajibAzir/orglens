@@ -2,7 +2,6 @@
 
 **Mapping how roles and people evolve over time.**
 
-_Lab 2 · People-Centric Tech & Collaboration · Powered by Setel_
 
 OrgLens turns scattered HR records into a single, time-aware picture of an organisation. It answers two questions that are normally painful to reconstruct by hand:
 

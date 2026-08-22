@@ -78,9 +78,11 @@ export default function Sidebar() {
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 relative flex items-center justify-center flex-shrink-0 bg-white dark:bg-slate-900 rounded-xl p-1.5 shadow-sm border border-slate-200 dark:border-cyan-500/30 dark:shadow-[0_0_15px_rgba(0,191,255,0.25)]">
             <svg viewBox="0 0 100 100" className="w-full h-full" fill="none">
-              <path d="M45 10L15 45L45 55L75 20L45 10Z" fill="#00BFFF" />
-              <path d="M45 55L15 45L35 75L55 90L45 55Z" fill="#00BFFF" />
-              <path d="M45 55L75 20L85 45L55 90L45 55Z" fill="#253DE8" />
+              <line x1="50" y1="25" x2="35" y2="50" stroke="#00BFFF" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+              <line x1="50" y1="25" x2="65" y2="50" stroke="#253DE8" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+              <circle cx="50" cy="20" r="6.5" fill="#00BFFF" />
+              <circle cx="35" cy="55" r="6" fill="#00BFFF" />
+              <circle cx="65" cy="55" r="6" fill="#253DE8" />
             </svg>
           </div>
           <div className="flex flex-col justify-center leading-tight">

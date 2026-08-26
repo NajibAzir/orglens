@@ -22,6 +22,7 @@ import PersonalRoleRelevancy from './pages/PersonalRoleRelevancy';
 import RoyaltyWallet from './pages/RoyaltyWallet';
 import WalletDashboard from './pages/WalletDashboard';
 import AdminOnlyRoute from './components/AdminOnlyRoute';
+import ChatbotWidget from './components/ChatbotWidget';
 
 function App() {
   const { theme } = useContext(AppContext);
@@ -88,6 +89,9 @@ function App() {
 
       {/* ── Global Staff Avatar Picker Modal ── */}
       <StaffPickerModal />
+
+      {/* ── Chatbot Widget (Bottom-Left) ── */}
+      <ChatbotWidget />
     </div>
     </div>
   );
